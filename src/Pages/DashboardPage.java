@@ -13,36 +13,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class DashboardPage {
 
 	final public static String url = "https://alfa.apsello.com/Dashboard/index.html";
-	
+
 	private final WebDriver driver;
-	
-	
-	
+
+	@FindBy(className = "greetingsText")
 	WebElement greetingLabel;
+	@FindBy(className = "mousePointer")
 	WebElement button;
-	
+
 	public DashboardPage(WebDriver driver) {
-	
+
 		this.driver = driver;
+		waitUntilLoaded();
+		//button = driver.findElement(By.className("mousePointer"));
+		//greetingLabel = driver.findElement(By.className("greetingsText"));
 	}
-	
-	public LoginPage logout()
-	{
-		
-		while(!button.isEnabled() || !button.isDisplayed())
-		{
+
+	public LoginPage logout() {
+	//	button = driver.findElement(By.className("mousePointer"));
+		while (!button.isEnabled() || !button.isDisplayed()) {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 		button.click();
-		while(driver.getCurrentUrl().equals("https://alfa.apsello.com/Dashboard/index.html#/"))
-		{	
+		while (driver.getCurrentUrl().equals("https://alfa.apsello.com/Dashboard/index.html#/")) {
 			button.click();
 			try {
 				Thread.sleep(200);
@@ -50,32 +50,23 @@ public class DashboardPage {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
 		}
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
-	
-	
-	
-	public void waitUntilLoaded()
-	{
+
+	public void waitUntilLoaded() {
 		(new WebDriverWait(driver, 80)).until(new ExpectedCondition<Boolean>() {
 			public Boolean apply(WebDriver d) {
 				try {
-					 button = driver.findElement(By.className("mousePointer"));
-					 greetingLabel = driver.findElement(By.className("greetingsText"));
-
+					button = driver.findElement(By.className("mousePointer"));
+					greetingLabel = driver.findElement(By.className("greetingsText"));
 				} catch (NoSuchElementException e) {
-					
-					System.out.println(button);
-					System.out.println(greetingLabel);
 					return false;
 				}
 				return true;
 			}
 		});
-		
-		
-		System.out.println("PAGE LOADED");
+
 	}
 }

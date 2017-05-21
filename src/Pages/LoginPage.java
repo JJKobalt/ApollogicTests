@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoginPage {
 
 	final public static String url = "https://alfa.apsello.com/login";
+	public static final Object LogoutUrl = "https://alfa.apsello.com/login#logout";
+	
 	private final WebDriver driver;
 	@FindBy(name = "username")
 	WebElement emailField;

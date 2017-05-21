@@ -6,7 +6,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,42 +25,61 @@ public class SeleniumTests {
 	
 	@Before
 	public void main(){
-		System.setProperty("webdriver.gecko.driver", "C:/Users/JanJa/workspace/Selenium/geckodriver.exe");
-		System.setProperty("webdriver.chrome.driver", "C:/Users/JanJa/workspace/Selenium/chromedriver.exe");
-	}
-	
-	
+		
+			System.setProperty("webdriver.gecko.driver", "C:/Users/JanJa/workspace/Selenium/geckodriver.exe");
+			System.setProperty("webdriver.chrome.driver", "C:/Users/JanJa/workspace/Selenium/chromedriver.exe");
+		}
 	
 	@Test
-	public void chromeRegistration() {
+	public void chrome_Registration_Logout_Login() {
 		
 		String password  = "password";
 		String email = generateEmail();
+		
 		WebDriver driver = new ChromeDriver();
-		shouldRegister(password, email, driver);
-	}
-	
-	@Test
-	public void firefoxRegistration() {
-		
-		String password  = "password";
-		String email = generateEmail();
-		WebDriver driver = new FirefoxDriver();
-		shouldRegister(password, email, driver);
-	}
-	
-
-	private void shouldRegister(String password, String email, WebDriver driver) {
 		driver.get(TestEnvRegistration.url);
+		
 		TestEnvRegistration registration = PageFactory.initElements(driver, TestEnvRegistration.class);
 		DashboardPage dashboard = registration.register(password, email, Language.randomValue());
+		
+		
 		dashboard.waitUntilLoaded();
+		Assert.assertEquals(DashboardPage.url, driver.getCurrentUrl());
+		
 		LoginPage loginPage = dashboard.logout();
+		
+		Assert.assertEquals(LoginPage.LogoutUrl, driver.getCurrentUrl());
 		loginPage.login(email, password);
+		
+		Assert.assertEquals(DashboardPage.url+"#/", driver.getCurrentUrl());
 		driver.quit();
 	}
 	
-	
+	@Test
+	public void firefox_Registration_Logout_Login() {
+		
+		String password  = "password";
+		String email = generateEmail();
+		
+		WebDriver driver = new FirefoxDriver();
+		driver.get(TestEnvRegistration.url);
+		
+		System.out.println("try register");
+		TestEnvRegistration registration = PageFactory.initElements(driver, TestEnvRegistration.class);
+		DashboardPage dashboard = registration.register(password, email, Language.randomValue());
+		System.out.println("dashboard");
+		
+		Assert.assertEquals(DashboardPage.url, driver.getCurrentUrl());
+		
+		LoginPage loginPage = dashboard.logout();
+		
+		Assert.assertEquals(LoginPage.LogoutUrl, driver.getCurrentUrl());
+		loginPage.login(email, password);
+		
+		Assert.assertEquals(DashboardPage.url+"#/", driver.getCurrentUrl());
+		driver.quit();
+		
+	}
 	
 	private static String generateEmail() {
 		return randomString(6, 8) + "@no-spam.ws";
