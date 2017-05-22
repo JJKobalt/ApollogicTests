@@ -25,12 +25,11 @@ public class DashboardPage {
 
 		this.driver = driver;
 		waitUntilLoaded();
-		//button = driver.findElement(By.className("mousePointer"));
-		//greetingLabel = driver.findElement(By.className("greetingsText"));
+	
 	}
 
 	public LoginPage logout() {
-	//	button = driver.findElement(By.className("mousePointer"));
+	
 		while (!button.isEnabled() || !button.isDisplayed()) {
 			try {
 				Thread.sleep(200);

@@ -36,9 +36,7 @@ public class LoginPage {
 					loginButton = driver.findElement(By.className("logInBtn"));
 
 				} catch (NoSuchElementException e) {
-					System.out.println(driver.getCurrentUrl());
-					System.out.println("passwordField " + passwordField);
-					System.out.println("emailField " + emailField);
+				
 					return false;
 				}
 				return true;

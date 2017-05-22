@@ -52,7 +52,7 @@ public class SeleniumTests {
 		loginPage.login(email, password);
 		
 		Assert.assertEquals(DashboardPage.url+"#/", driver.getCurrentUrl());
-		driver.quit();
+		driver.close();
 	}
 	
 	@Test
@@ -64,10 +64,10 @@ public class SeleniumTests {
 		WebDriver driver = new FirefoxDriver();
 		driver.get(TestEnvRegistration.url);
 		
-		System.out.println("try register");
+		
 		TestEnvRegistration registration = PageFactory.initElements(driver, TestEnvRegistration.class);
 		DashboardPage dashboard = registration.register(password, email, Language.randomValue());
-		System.out.println("dashboard");
+		
 		
 		Assert.assertEquals(DashboardPage.url, driver.getCurrentUrl());
 		
@@ -77,7 +77,7 @@ public class SeleniumTests {
 		loginPage.login(email, password);
 		
 		Assert.assertEquals(DashboardPage.url+"#/", driver.getCurrentUrl());
-		driver.quit();
+		driver.close();
 		
 	}
 	
