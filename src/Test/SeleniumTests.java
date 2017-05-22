@@ -24,7 +24,7 @@ public class SeleniumTests {
 
 	
 	@Before
-	public void main(){
+	public void setProperty(){
 		
 			System.setProperty("webdriver.gecko.driver", "C:/Users/JanJa/workspace/Selenium/geckodriver.exe");
 			System.setProperty("webdriver.chrome.driver", "C:/Users/JanJa/workspace/Selenium/chromedriver.exe");
